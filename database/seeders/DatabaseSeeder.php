@@ -122,12 +122,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        UangKas::create([
-            'bulan' => 'Mei',
-            'pemasukan' => 5000000,
-            'saldo' => 5000000
-        ]);
-
         Setting::create([
             'name' => 'register',
             'type' => 'select',
