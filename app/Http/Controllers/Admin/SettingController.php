@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alumni;
 use App\Models\Anggota;
 use App\Models\Berkas;
 use App\Models\Bidang;
 use App\Models\Kelas;
 use App\Models\Pemilu;
+use App\Models\Pengurus;
 use App\Models\Setting;
 use App\Models\Unit;
 use App\Models\User;
@@ -48,7 +50,7 @@ class SettingController extends Controller
         }
 
         if ($request->hasFile('value')) {
-            $filePath = $request->file('value')->store('setting/background-login/');
+            $filePath = $request->file('value')->store('setting/background-login');
             $setting->value = $filePath;
         } else {
             $setting->value = $fields['value'];
@@ -72,4 +74,26 @@ class SettingController extends Controller
             return redirect()->back()->with('status', 'Data anggota berhasil di reset');
         }
     }
+
+    // public function alumnikanPengurus(Request $request)
+    // {
+    //     $type = $request->query('type');
+    //     if ($type == 'alumnikan') {
+    //         $penguruses = Pengurus::where('status', 'balok 2');
+    //         $periode = date('Y');
+    //         foreach ($penguruses as $pengurus) {
+    //             $alumni = new Alumni();
+    //             $alumni->user_id = $pengurus->user_id;
+    //             $alumni->unit_id = $pengurus->unit_id;
+    //             $alumni->bidang_id = $pengurus->bidang_id;
+    //             $alumni->periode = $periode;
+
+    //             if ($alumni->save()) {
+    //                 $pengurus->delete();
+
+    //                 return redirect()->back()->with('status', 'Pengurus berhasil di alumnikan');
+    //             }
+    //         }
+    //     }
+    // }
 }

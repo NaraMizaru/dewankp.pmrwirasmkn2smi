@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('alumnis', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('unit_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('bidang_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('periode');
             $table->timestamps();
         });
     }

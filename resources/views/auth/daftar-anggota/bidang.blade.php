@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Anggota Bidang')
+@section('title', 'Daftar Anggota ' . $thisBidang->name)
 
 @push('style')
     <!-- CSS Libraries -->
