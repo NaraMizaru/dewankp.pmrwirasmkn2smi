@@ -38,7 +38,9 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Balok 1</h4>
+                                <h4>
+                                    <a href="{{ route('admin.kepengurusan', ['type' => 'pengurus', 'group_by' => 'balok-1']) }}" class="text-decoration-none text-muted">Balok 1</a>
+                                </h4>
                             </div>
                             <div class="card-body">
                                 {{ $balok1Count }}
@@ -53,7 +55,9 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Balok 2</h4>
+                                <h4>
+                                    <a href="{{ route('admin.kepengurusan', ['type' => 'pengurus', 'group_by' => 'balok-2']) }}" class="text-decoration-none text-muted">Balok 2</a>
+                                </h4>
                             </div>
                             <div class="card-body">
                                 {{ $balok2Count }}

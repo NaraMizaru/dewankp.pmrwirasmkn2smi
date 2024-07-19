@@ -38,7 +38,8 @@ class ChangePasswordController extends Controller
         if ($user->password == $fields['old_password'] && $fields['new_password'] == $fields['confirmation_password']) {
             $user->password = $fields['new_password'];
             $user->save();
-            return redirect()->back()->with('status','success');
+            return redirect()->back()->with('status','Password berhasil di ubah');
         }
     }
+
 }

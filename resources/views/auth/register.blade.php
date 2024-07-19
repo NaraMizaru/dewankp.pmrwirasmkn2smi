@@ -14,10 +14,14 @@
         </div>
 
         <div class="card-body">
-            @if (Session::has('error'))
+            @if ($errors->any())
                 <div class="form-group">
-                    <div class="alert alert-danger text-center" role="alert">
-                        {{ Session::get('error') }}
+                    <div class="alert alert-danger" role="alert">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             @endif

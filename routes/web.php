@@ -48,6 +48,7 @@ Route::prefix('/auth')->group(function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'role.admin']], function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('admin.dashboard');
+    
 
     Route::get('/profile/{username}/me', [AdminProfileController::class, 'profile'])->name('admin.profile');
     Route::post('/profile/{username}/me', [AdminProfileController::class, 'edit'])->name('admin.edit.profile');

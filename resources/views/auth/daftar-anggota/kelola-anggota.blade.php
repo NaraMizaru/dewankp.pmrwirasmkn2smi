@@ -38,7 +38,17 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Pengkacuan</h4>
+                                @if (auth()->user()->role == 'admin')
+                                    <a href="{{ route('admin.kelola.anggota', ['group_by' => 'pengkacuan']) }}"
+                                        class="text-muted text-decoration-none">
+                                        <h4>Pengkacuan</h4>
+                                    </a>
+                                @elseif (auth()->user()->role == 'pengurus')
+                                    <a href="{{ route('pengurus.kelola.anggota', ['group_by' => 'pengkacuan']) }}"
+                                        class="text-muted text-decoration-none">
+                                        <h4>Pengkacuan</h4>
+                                    </a>
+                                @endif
                             </div>
                             <div class="card-body">
                                 {{ $pengkacuanCount }}
@@ -53,7 +63,17 @@
                         </div>
                         <div class="card-wrap">
                             <div class="card-header">
-                                <h4>Tidak Pengkacuan</h4>
+                                @if (auth()->user()->role == 'admin')
+                                    <a href="{{ route('admin.kelola.anggota', ['group_by' => 'tidak-pengkacuan']) }}"
+                                        class="text-muted text-decoration-none">
+                                        <h4>Tidak Pengkacuan</h4>
+                                    </a>
+                                @elseif (auth()->user()->role == 'pengurus')
+                                    <a href="{{ route('pengurus.kelola.anggota', ['group_by' => 'tidak-pengkacuan']) }}"
+                                        class="text-muted text-decoration-none">
+                                        <h4>Tidak Pengkacuan</h4>
+                                    </a>
+                                @endif
                             </div>
                             <div class="card-body">
                                 {{ $tidakPengkacuanCount }}
@@ -72,9 +92,10 @@
                             <h4>Daftar Anggota All</h4>
                         </div>
                         <div class="card-body">
-                            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'pengurus' && auth()->user()->pengurus->type == 'inti 6')
-                            <a href="{{ route('download.anggota.pdf') }}" class="float-right btn btn-danger mb-2"><i
-                                class="fa-regular fa-file-pdf"></i></a>
+                            @if (auth()->user()->role == 'admin' ||
+                                    (auth()->user()->role == 'pengurus' && auth()->user()->pengurus->type == 'inti 6'))
+                                <a href="{{ route('download.anggota.pdf') }}" class="float-right btn btn-danger mb-2"><i
+                                        class="fa-regular fa-file-pdf"></i></a>
                             @endif
                             <div class="table-responsive">
                                 <table class="table-striped table" id="table-1">
@@ -88,7 +109,7 @@
                                             <th>Unit</th>
                                             <th>Status</th>
                                             @if (auth()->user()->role == 'admin')
-                                            <th>Action</th>
+                                                <th>Action</th>
                                             @endif
                                         </tr>
                                     </thead>
@@ -161,7 +182,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const table = $('#table-1').DataTable();
 
-            const handleDeleteUangKas = (e) => {
+            const handleDeleteAnggota = (e) => {
                 e.preventDefault();
                 const target = e.currentTarget.getAttribute("href");
                 swal({
@@ -185,8 +206,8 @@
             table.on('draw', () => {
                 const deleteButtons = document.querySelectorAll('a[id="btn-delete"]');
                 deleteButtons.forEach((button) => {
-                    button.removeEventListener('click', handleDeleteUangKas);
-                    button.addEventListener('click', handleDeleteUangKas);
+                    button.removeEventListener('click', handleDeleteAnggota);
+                    button.addEventListener('click', handleDeleteAnggota);
                 });
             });
 

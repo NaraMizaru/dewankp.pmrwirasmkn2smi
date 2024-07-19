@@ -75,25 +75,26 @@ class SettingController extends Controller
         }
     }
 
-    // public function alumnikanPengurus(Request $request)
-    // {
-    //     $type = $request->query('type');
-    //     if ($type == 'alumnikan') {
-    //         $penguruses = Pengurus::where('status', 'balok 2');
-    //         $periode = date('Y');
-    //         foreach ($penguruses as $pengurus) {
-    //             $alumni = new Alumni();
-    //             $alumni->user_id = $pengurus->user_id;
-    //             $alumni->unit_id = $pengurus->unit_id;
-    //             $alumni->bidang_id = $pengurus->bidang_id;
-    //             $alumni->periode = $periode;
+    public function alumnikanPengurus(Request $request)
+    {
+        $type = $request->query('type');
+        if ($type == 'alumnikan') {
+            $penguruses = Pengurus::where('status', 'balok 2');
+            $periode = date('Y');
+            foreach ($penguruses as $pengurus) {
+                $alumni = new Alumni();
+                // $alumni
+                $alumni->user_id = $pengurus->user_id;
+                $alumni->unit_id = $pengurus->unit_id;
+                $alumni->bidang_id = $pengurus->bidang_id;
+                $alumni->periode = $periode;
 
-    //             if ($alumni->save()) {
-    //                 $pengurus->delete();
+                if ($alumni->save()) {
+                    $pengurus->delete();
 
-    //                 return redirect()->back()->with('status', 'Pengurus berhasil di alumnikan');
-    //             }
-    //         }
-    //     }
-    // }
+                    return redirect()->back()->with('status', 'Pengurus berhasil di alumnikan');
+                }
+            }
+        }
+    }
 }

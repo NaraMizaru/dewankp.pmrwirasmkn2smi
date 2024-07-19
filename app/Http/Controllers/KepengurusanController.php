@@ -25,6 +25,30 @@ class KepengurusanController extends Controller
         $pemilu = Pemilu::where('status', 'aktif')->first();
 
         if ($request->query('type') == 'pengurus') {
+            if ($request->query('group_by') == 'balok-1') {
+                $pengurus = Pengurus::where('status', 'balok 1')->get();
+
+                return view('auth.kepengurusan.kelola-pengurus-group', compact([
+                    'pengurus',
+                    'kelas',
+                    'unit',
+                    'bidang',
+                    'berkas',
+                    'pemilu'
+                ]), ['type_menu' => 'kepengurusan']);
+            } else if ($request->query('group_by') == 'balok-2') {
+                $pengurus = Pengurus::where('status', 'balok 2')->get();
+
+                return view('auth.kepengurusan.kelola-pengurus-group', compact([
+                    'pengurus',
+                    'kelas',
+                    'unit',
+                    'bidang',
+                    'berkas',
+                    'pemilu'
+                ]), ['type_menu' => 'kepengurusan']);
+            }
+
             $pengurus = Pengurus::all();
             $pengurusCount = $pengurus->count();
             $balok1Count = Pengurus::where('status', 'balok 1')->count();
@@ -51,7 +75,7 @@ class KepengurusanController extends Controller
             $prokerTerlaksanaCount = Proker::where('status', 'selesai')->count();
             $prokerOngoingCount = Proker::where('status', 'ongoing')->count();
             $prokerTidakTerlaksanaCount = Proker::where('status', 'tidak selesai')->count();
-            
+
             return view('auth.kepengurusan.program-kerja', compact([
                 // 'pengurus',
                 'dokumentasi',
@@ -232,7 +256,7 @@ class KepengurusanController extends Controller
             'tanggal' => 'required',
             'dokumentasi_id' => 'nullable',
         ]);
-        
+
         $proker->status = 'selesai';
         $proker->tanggal = $fields['tanggal'];
         $proker->dokumentasi_id = $fields['dokumentasi_id'] == 'NULL' ? NULL : $fields['dokumentasi_id'];
@@ -258,11 +282,11 @@ class KepengurusanController extends Controller
             $prokerUnit3 = Proker::orderBy('name', 'asc')->where('unit_id', 3)->get();
             $prokerUnit4 = Proker::orderBy('name', 'asc')->where('unit_id', 4)->get();
             $pdf = Pdf::loadView('pdf.proker', [
-                    'prokerUnit1' => $prokerUnit1,
-                    'prokerUnit2' => $prokerUnit2,
-                    'prokerUnit3' => $prokerUnit3,
-                    'prokerUnit4' => $prokerUnit4,
-                    'unit' => $unit,
+                'prokerUnit1' => $prokerUnit1,
+                'prokerUnit2' => $prokerUnit2,
+                'prokerUnit3' => $prokerUnit3,
+                'prokerUnit4' => $prokerUnit4,
+                'unit' => $unit,
             ]);
             return $pdf->download('Daftar List Program Kerja PMR.pdf');
         } else {
@@ -270,10 +294,10 @@ class KepengurusanController extends Controller
             $unit = Unit::where('slug', $slug)->first();
             $proker = Proker::orderBy('name', 'asc')->where('unit_id', $unit->id)->get();
             $pdf = Pdf::loadView('pdf.proker', [
-                    'proker' => $proker,
-                    'unit' => $unit,
+                'proker' => $proker,
+                'unit' => $unit,
             ]);
-            return $pdf->download('Daftar List Program Kerja '. $unit->name. '.pdf');
+            return $pdf->download('Daftar List Program Kerja ' . $unit->name . '.pdf');
         }
     }
 }

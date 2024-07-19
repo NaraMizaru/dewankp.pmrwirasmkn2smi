@@ -142,36 +142,6 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-primary">Ganti Password</h3>
-                        </div>
-                        <form action="">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="new_password" class="form-label">Password Baru</label>
-                                            <input type="password" name="new_password" id="new_password"
-                                                class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label for="old_password" class="form-label">Konfirmasi Password Baru</label>
-                                            <input type="password" name="confirmation_password"
-                                                id="confirmation_password" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <button type='submit' class="btn btn-primary float-right mb-3">Ganti Password</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </section>
     </div>

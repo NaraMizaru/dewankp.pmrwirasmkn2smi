@@ -17,18 +17,42 @@ use Illuminate\Support\Facades\Auth;
 
 class DaftarAnggotaController extends Controller
 {
-    public function kelolaAnggota()
+    public function kelolaAnggota(Request $request)
     {
         $anggota = Anggota::orderBy('unit_id', 'asc');
-        $anggotas = $anggota->get();
-        $anggotaCount = $anggota->count();
-        $pengkacuanCount = $anggota->where('status', 'pengkacuan')->count();
-        $tidakPengkacuanCount = Anggota::where('status', 'tidak pengkacuan')->count();
         $kelas = Kelas::all();
         $unit = Unit::all();
         $bidang = Bidang::all();
         $pemilu = Pemilu::where('status', 'aktif')->first();
         $berkas = Berkas::orderBy('created_at', 'ASC')->get();
+
+        if ($request->query('group_by') == 'pengkacuan') {
+            $anggotas = $anggota->where('status', 'pengkacuan')->get();
+            return view('auth.daftar-anggota.kelola-anggota-group', compact([
+                'anggotas',
+                'kelas',
+                'unit',
+                'bidang',
+                'berkas',
+                'pemilu'
+            ]), ['type_menu' => 'kelola_anggota']);
+        } else if ($request->query('group_by') == 'tidak-pengkacuan') {
+            $anggotas = $anggota->where('status', 'tidak pengkacuan')->get();
+            // dd($anggotas);
+            return view('auth.daftar-anggota.kelola-anggota-group', compact([
+                'anggotas',
+                'kelas',
+                'unit',
+                'bidang',
+                'berkas',
+                'pemilu'
+            ]), ['type_menu' => 'kelola_anggota']);
+        }
+
+        $anggotas = $anggota->get();
+        $anggotaCount = $anggota->count();
+        $pengkacuanCount = $anggota->where('status', 'pengkacuan')->count();
+        $tidakPengkacuanCount = Anggota::where('status', 'tidak pengkacuan')->count();
 
         return view('auth.daftar-anggota.kelola-anggota', compact([
             'anggotas',

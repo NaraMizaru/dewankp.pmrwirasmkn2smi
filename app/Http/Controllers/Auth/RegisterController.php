@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
 class RegisterController extends Controller
@@ -38,10 +39,10 @@ class RegisterController extends Controller
 
     public function authRegister(Request $request)
     {
-        $fields = $request->validate([
+        $fields = Validator::make($request->all(), [
             'fullname' => 'required',
             'nis' => 'nullable|unique:anggotas,nis',
-            'username' => 'required',
+            'username' => 'required|unique:users',
             'password' => 'required',
             'email' => 'email',
             'no_telp' => 'required',
@@ -50,16 +51,16 @@ class RegisterController extends Controller
         ]);
         // dd($unitId);
         
-        if (!$fields) {
-            return redirect()->back()->with('error', 'Terjadi kesalahan');
+        if ($fields->fails()) {
+            return redirect()->back()->withErrors($fields->errors())->withInput($request->all());
         }
         
         $user = new User([
-            'fullname' => $fields['fullname'],
-            'username' => $fields['username'],
-            'password' => $fields['password'],
-            'email' => $fields['email'],
-            'no_telp' => $fields['no_telp'],
+            'fullname' => $request->username,
+            'username' => $request->username,
+            'password' => $request->password,
+            'email' => $request->email,
+            'no_telp' => $request->no_telp,
         ]);
         
         $unitId = Unit::inRandomOrder()->value('id');
@@ -67,9 +68,9 @@ class RegisterController extends Controller
         if ($user->save()) {
             $anggota = new Anggota([
                 'user_id' => $user->id,
-                'nis' => $fields['nis'],
-                'kelas_id' => $fields['kelas_id'],
-                'bidang_id' => $fields['bidang_id'],
+                'nis' => $request->nis,
+                'kelas_id' => $request->kelas_id,
+                'bidang_id' => $request->bidang_id,
                 'unit_id' => $unitId
             ]);
 
